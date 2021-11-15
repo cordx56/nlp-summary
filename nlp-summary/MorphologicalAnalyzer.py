@@ -11,7 +11,7 @@ class MorphologicalAnalyzer():
 			cw = CalcedWord(parsed[i])
 			ps.setWord(cw)
 
-		return ps.getSentence()
+		return ps
 
 # MeCabによって分解された単語とその重みを表すクラス		
 class CalcedWord():
@@ -25,8 +25,9 @@ class CalcedWord():
 
 # CalcedWordを集めた文とその重み合計を表すクラス
 class ParsedSentence():
-	sent = []
-	wsum = 0
+	def __init__(self):
+		self.sent = []
+		self.wsum = 0
 	def setWord(self, word):
 		self.sent.append(word)
 	def setSum(self, n):
@@ -42,14 +43,17 @@ class ParsedSentence():
 
 # ParsedSentenceを集めた文章を表すクラス
 class ParsedText():
-	txt = []
+	def __init__(self):
+		self.txt = []
 	def setSentence(self, sent):
 		self.txt.append(sent)
 	def getText(self): # 文章ゲッター
 		return self.txt
-	def Get_by_Rank(self): # 引数で与えられた順位のsentを出力
-		df = pandas.DataFrame(self.txt)
-		sortedDF = df.sort_values('1')
-		rtxt = sortedDF.values.tolist()
+	def Get_by_Rank(self, rank): # 引数で与えられた順位のsentを出力
+		rtxt = self.txt
+		for i in range(len(rtxt)):
+			for j in range(len(rtxt)-1, i, -1):
+				if rtxt[j].getSum() < rtxt[j-1].getSum():
+					rtxt[j], rtxt[j-1] = rtxt[j-1], rtxt[j]
 
-		return self.rtxt
+		return rtxt[rank-1]
