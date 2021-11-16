@@ -50,10 +50,7 @@ class ParsedText():
 	def getText(self): # 文章ゲッター
 		return self.txt
 	def Get_by_Rank(self, rank): # 引数で与えられた順位のsentを出力
-		rtxt = self.txt
-		for i in range(len(rtxt)):
-			for j in range(len(rtxt)-1, i, -1):
-				if rtxt[j].getSum() < rtxt[j-1].getSum():
-					rtxt[j], rtxt[j-1] = rtxt[j-1], rtxt[j]
+		rtxt = sorted(self.txt, key=lambda ParsedSentence: ParsedSentence.wsum)
 
 		return rtxt[rank-1]
+

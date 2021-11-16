@@ -13,16 +13,6 @@ print(parsed2.getSum())
 pt.setSentence(parsed1)
 pt.setSentence(parsed2)
 
-sent = pt.getText()[0].getSentence()
-print(sent.getSum())
+sent = pt.Get_by_Rank(1).getSentence()
 for i in range(0,len(sent)):
 	print(sent[i].getWord())
-
-sent = pt.getText()[1].getSentence()
-print(sent.getSum())
-for i in range(0,len(sent)):
-	print(sent[i].getWord())
-
-#sent = pt.Get_by_Rank(2).getSentence()
-#for i in range(0,len(sent)):
-#	print(sent[i].getWord())
