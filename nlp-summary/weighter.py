@@ -1,8 +1,8 @@
 from typing import Dict
 import math
-from .calced_word import CalcedWord
-from .parsed_sentence import ParsedSentence
-from .parsed_text import ParsedText
+from calced_word import CalcedWord
+from parsed_sentence import ParsedSentence
+from parsed_text import ParsedText
 
 class Weighter:
     tf_dictionary: Dict[str, float] = {}
@@ -25,7 +25,7 @@ class Weighter:
     def calc_tf(self, source: ParsedText):
         word_count = 0
         for parsed_sentence in source:
-            for calced_word in parsed_sentence.calced_words:
+            for calced_word in parsed_sentence.sent:
                 word = calced_word.word
                 if word not in self.tf_dictionary.keys():
                     self.tf_dictionary[word] = 0
