@@ -1,4 +1,5 @@
 import sys
+import time
 
 from weighter import Weighter
 from MorphologicalAnalyzer import MorphologicalAnalyzer
@@ -21,7 +22,7 @@ class Summarizer:
     def summalize(self, file_name, max_length):
         self.file_name = file_name
         self.max_length = max_length
-        self.weighter = Weighter(160)#ぐらい
+        self.weighter = Weighter(153)#ぐらい
         self.weighter.load_idf("idf.txt")
 
         try:
@@ -30,13 +31,22 @@ class Summarizer:
             print(e)
 
         for line in iter(file.readline, ''):
-            print(line)
+            print("for line in iter(file.readline, ''): " + line)
             self.parsed_text.setSentence(self.parser.parse(line))
             
         self.weighter.calc_tf(self.parsed_text)
 
+        pt = ParsedText()
         for sentence in self.parsed_text:
-            sentence.weight_sum()
+            print("sentence.weight_sum()")
+
+            pt.setSentence(self.weighter.weight_sentence(sentence))
+            sentence.calcSum()
+
+        self.parsed_text = pt
+        for sentence in self.parsed_text:
+            print("sentence.weight_sum()")
+            sentence.calcSum()
 
         count = 1
         while len(self.summary) < self.max_length:

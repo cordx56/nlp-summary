@@ -14,7 +14,8 @@ def count_idf(dir_name):
 
     result_dict = {}
     sentence_list = make_sentence_list(p)
-    for sentence in sentence_list:
+    for i, sentence in enumerate(sentence_list):
+        print(i)
         parsed_sentence = ma.parse(sentence)
         word_list = map(lambda x: x.getWord(), parsed_sentence.getSentence())
         word_set = set(word_list)
@@ -34,10 +35,8 @@ def make_sentence_list(p):
     for target in p.glob("*.txt"):
         print(target)
         with open(target) as f:
-            lines = f.readlines()
-            # for sentence in lines:
-            #     print(sentence)
-            l += lines
+            l.append(f.read())
+    print(l)
     return l
 
 if __name__ == "__main__":

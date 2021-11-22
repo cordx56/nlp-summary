@@ -11,16 +11,19 @@ class Weighter:
     def __init__(self, n: int):
         self.documents_count = n
     def weight(self, source: str) -> CalcedWord:
-        result = CalcedWord()
-        result.word = source
+        result = CalcedWord(source)
+        #result.word = source
+        print(self.tf_dictionary[result.word])
+        print(self.idf_dictionary[result.word])
         result.weight = self.tf_dictionary[result.word]
-        result.weight = math.log2(self.documents_count / self.idf_dictionary[result.word]) + 1
+        result.weight *= math.log2(self.documents_count / self.idf_dictionary[result.word]) + 1
+        print(str(result))
         return result
     def weight_sentence(self, source: ParsedSentence) -> ParsedSentence:
         result = ParsedSentence()
-        for source_word in source.calced_words:
+        for source_word in source.sent:
             result_word = self.weight(source_word.word)
-            result.calced_words.append(result_word)
+            result.setWord(result_word)
         return result
     def calc_tf(self, source: ParsedText):
         word_count = 0
