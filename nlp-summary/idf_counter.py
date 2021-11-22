@@ -19,6 +19,8 @@ def count_idf(dir_name):
         word_list = map(lambda x: x.getWord(), parsed_sentence.getSentence())
         word_set = set(word_list)
         for word in word_set:
+            if ',' in word:
+                continue
             if word not in result_dict:
                 result_dict[word] = 0
             result_dict[word] += 1
