@@ -10,6 +10,7 @@ class MorphologicalAnalyzer():
         mecab = MeCab.Tagger("-Owakati")
         parsed = mecab.parse(str).split(' ')
         parsed = filter(lambda x: len(x.strip()) != 0, parsed)
+        parsed = filter(lambda x: "," not in x, parsed)
 
         for v in parsed:
             cw = CalcedWord(v)

@@ -66,3 +66,4 @@ if __name__ == "__main__":
     print("----要約----")
     print(ret)
     print("----要約ここまで----")
+    print(str(len(ret)) + "文字")

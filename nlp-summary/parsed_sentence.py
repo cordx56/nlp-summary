@@ -14,6 +14,7 @@ class ParsedSentence():
 		for i in range(0,len(self.sent)):
 			self.wsum += self.sent[i].getWeight()
 		print(str(self) + ":" + str(self.wsum))
+		self.wsum /= len(self.sent)
 		return self.wsum
 	def getSentence(self): #文ゲッター
 		return self.sent

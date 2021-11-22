@@ -12,8 +12,13 @@ class ParsedText():
 	def getText(self): # 文章ゲッター
 		return self.txt
 	def get_by_Rank(self, rank): # 引数で与えられた順位のsentを出力
-		rtxt = sorted(self.txt, key=lambda ParsedSentence: ParsedSentence.wsum)
+		rtxt = sorted(self.txt, key=lambda parsedSentence: -parsedSentence.wsum)
+		print("★★★★★★★★★★★★")
+		for x in rtxt:
+			print(str(x) + ", weight:" + str(x.wsum))
+		print("★★★★★★★★★★★★")
 		return rtxt[rank-1]
+
 
 	def __iter__(self):
 		# __next__()はselfが実装してるのでそのままselfを返す
