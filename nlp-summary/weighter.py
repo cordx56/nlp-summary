@@ -33,6 +33,7 @@ class Weighter:
                 word_count += 1
         for v in self.tf_dictionary:
             self.tf_dictionary[v] /= word_count
+    
     def load_idf(self, filename: str):
         with open(filename, 'r') as f:
             for line in f.readlines():

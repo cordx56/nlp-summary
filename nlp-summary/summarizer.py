@@ -1,3 +1,5 @@
+import sys
+
 from weighter import Weighter
 from MorphologicalAnalyzer import MorphologicalAnalyzer
 from calced_word import CalcedWord
@@ -20,6 +22,7 @@ class Summarizer:
         self.file_name = file_name
         self.max_length = max_length
         self.weighter = Weighter(160)#ぐらい
+        self.weighter.load_idf("idf.txt")
 
         try:
             file = open(self.file_name, "rt")
@@ -46,67 +49,10 @@ class Summarizer:
 
         return self.summary
 
-#dummy
-# class Weighter:
-#     def __init__(self):
-#         print("Weighter.__init__()")
-#         pass
-#     def calc_tf(self, parsed_text):
-#         pass
-
-# class MorphologicalAnalyzer:
-#     def __init__(self):
-#         print("MorphologicalAnalyzer.__init__()")
-#         pass
-#     def parse(self, str):
-#         print("MorphologicalAnalyzer.parse()")
-#         pass
-
-# class ParsedText:
-#     def __init__(self):
-#         print("ParsedText.__init__()")
-#         self.i = 0
-#         self.parsed_sentences = [ParsedSentence()]
-#         pass
-
-#     def add(self, parsed_sentence):
-#         print("ParsedText.add()")
-#         pass
-
-#     def __iter__(self):
-#         self.i = 0
-#         return self
-    
-#     def __next__(self):
-#         print("ParsedText.__next__()")
-#         if self.i > 5 : raise StopIteration
-#         self.i += 1
-#         return self.parsed_sentences[0]
-    
-#     def get_by_Rank(self, rank):
-#         #weight の高い順にrank番目のものが帰ってくると良い
-#         print("ParsedText.get_by_Rank()")
-#         return("ランクの高い1文")
-
-# class ParsedSentence:
-#     def __init__(self):
-#         print("ParsedSentence.__init__()")
-#         self.list = None
-#     def weight_sum(self):
-#         pass
-#     def __str__(self):
-#         return "listから文字列化したやつ"
-
-# class CalcedWord:
-#     def __init__(self):
-#         print("CalcedWord.__init__()")
-#         self.word = ""
-#         self.weight = 0.0
-
 #test
 if __name__ == "__main__":
     summarizer = Summarizer()
-    ret = summarizer.summalize("../testText.txt", 140)
+    ret = summarizer.summalize(sys.argv[1], 140)
     print("----要約----")
     print(ret)
     print("----要約ここまで----")
