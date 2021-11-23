@@ -1,5 +1,5 @@
 import sys
-import time
+from pathlib import Path
 
 from weighter import Weighter
 from MorphologicalAnalyzer import MorphologicalAnalyzer
@@ -31,26 +31,25 @@ class Summarizer:
             print(e)
 
         for line in iter(file.readline, ''):
-            print("for line in iter(file.readline, ''): " + line)
+            #print("for line in iter(file.readline, ''): " + line)
             self.parsed_text.setSentence(self.parser.parse(line))
-            
+
+        print("calc_tf")    
         self.weighter.calc_tf(self.parsed_text)
 
         pt = ParsedText()
         for sentence in self.parsed_text:
             print("sentence.weight_sum()")
-
             pt.setSentence(self.weighter.weight_sentence(sentence))
-            sentence.calcSum()
 
         self.parsed_text = pt
         for sentence in self.parsed_text:
-            print("sentence.weight_sum()")
+            print("sentence.calcSum()")
             sentence.calcSum()
 
         count = 1
-        while len(self.summary) < self.max_length:
-            # print(self.summary)
+        while len(self.summary) < self.max_length and count <= len(self.parsed_text.getText()):
+            #print(self.summary)
             ret = str(self.parsed_text.get_by_Rank(count))
             if len(self.summary) + len(ret) >= self.max_length:
                 break    
@@ -61,9 +60,23 @@ class Summarizer:
 
 #test
 if __name__ == "__main__":
-    summarizer = Summarizer()
-    ret = summarizer.summalize(sys.argv[1], 140)
-    print("----要約----")
-    print(ret)
-    print("----要約ここまで----")
-    print(str(len(ret)) + "文字")
+    p = Path(sys.argv[1])
+    if p.is_dir():
+
+        l = list(p.glob('*.txt'))
+        for target in l:
+            summarizer = Summarizer()
+            print(target)
+            ret = summarizer.summalize(target, 140)
+            print("----要約----")
+            print(ret)
+            print("----要約ここまで----")
+            with open("./results/" + target.name, 'w') as f:
+                f.write(ret)
+    else:
+        summarizer = Summarizer()
+        ret = summarizer.summalize(sys.argv[1], 140)
+        print("----要約----")
+        print(ret)
+        print("----要約ここまで----")
+        print(str(len(ret)) + "文字")
