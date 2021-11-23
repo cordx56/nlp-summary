@@ -13,11 +13,14 @@ class Weighter:
     def weight(self, source: str) -> CalcedWord:
         result = CalcedWord(source)
         #result.word = source
-        print(self.tf_dictionary[result.word])
-        print(self.idf_dictionary[result.word])
-        result.weight = self.tf_dictionary[result.word]
-        result.weight *= math.log2(self.documents_count / self.idf_dictionary[result.word]) + 1
-        print(str(result))
+        #print(self.tf_dictionary[result.word])
+        #print(self.idf_dictionary[result.word])
+        try:
+            result.weight = self.tf_dictionary[result.word]
+            result.weight *= math.log2(self.documents_count / self.idf_dictionary[result.word]) + 1
+        except KeyError as e:
+            result.weight = 0
+        #print(str(result))
         return result
     def weight_sentence(self, source: ParsedSentence) -> ParsedSentence:
         result = ParsedSentence()
