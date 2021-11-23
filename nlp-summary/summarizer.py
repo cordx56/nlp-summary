@@ -22,7 +22,7 @@ class Summarizer:
     def summalize(self, file_name, max_length):
         self.file_name = file_name
         self.max_length = max_length
-        self.weighter = Weighter(153)#ぐらい
+        self.weighter = Weighter(224)#ぐらい
         self.weighter.load_idf("idf.txt")
 
         try:
